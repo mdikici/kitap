@@ -35,8 +35,8 @@
 </div>
 
 <script>
-const SHEET_ID = "13W2KbnTpBdBakHXFjT94t1rEtcbaP_OqYNPHvQbiiSg";
-const API_KEY  = "AIzaSyBilKRpmmTp_B60SuoY59lZDnWrCO4Sm0M";       // Google Cloud'dan aldığın anahtar
+//const SHEET_ID = "13W2KbnTpBdBakHXFjT94t1rEtcbaP_OqYNPHvQbiiSg";
+//const API_KEY  = "AIzaSyBilKRpmmTp_B60SuoY59lZDnWrCO4Sm0M";       // Google Cloud'dan aldığın anahtar
 const RANGE    = "kitaplık!A1:Z1000";    // sekme adı Türkçe karakter içerebilir
 
 const statusEl = document.getElementById("status");
@@ -65,13 +65,17 @@ const escapeHtml = s => s.replace(/[&<>"']/g, c =>
 
 async function load() {
   try {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(RANGE)}?key=${API_KEY}`;
+    // const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(RANGE)}?key=${API_KEY}`;
+    const url = `https://script.google.com/macros/s/AKfycbw1tKV-xVDJlA2hLhCk0VeVpsEx7HOKpY74hGFv49k4Rce9wI3uTF6qQ1UMm9eTUBLz/exec`;
+
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`API hatası: ${res.status}`);
+    //if (!res.ok) throw new Error(`API hatası: ${res.status}`);
+    if (!res.ok) throw new Error(`Sunucu hatası: ${res.status}`);
     const data = await res.json();
-    if (!data.values?.length) throw new Error("Sayfa boş görünüyor.");
-    headers = data.values[0];
-    rows    = data.values.slice(1);
+    //if (!data.values?.length) throw new Error("Sayfa boş görünüyor.");
+    if (!data.length) throw new Error("Sayfa boş görünüyor.");
+    headers = data[0];
+    rows    = data.slice(1);
     theadRow.innerHTML = headers.map(h => `<th>${escapeHtml(h)}</th>`).join("");
     statusEl.hidden = true;
     tableEl.hidden  = false;
