@@ -14,25 +14,33 @@
   #search { width: 100%; padding: 14px 16px; font-size: 17px; border: 1px solid #d1d1d6; border-radius: 12px; outline: none; }
   #search:focus { border-color: var(--accent); }
   #count { margin: 10px 4px; color: #6e6e73; font-size: 14px; }
-  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
-  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #eee; font-size: 15px; word-break: break-word; }
-  th { background: #fafafa; font-weight: 600; }
+  .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  table { border-collapse: collapse; min-width: 100%; }
+  th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid #eee; font-size: 15px; line-height: 1.45; white-space: nowrap; }
+  th { background: #fafafa; font-weight: 600; position: sticky; top: 0; }
+  td { white-space: normal; min-width: 130px; max-width: 340px; }
+  tbody tr:nth-child(even) { background: #fafbfd; }
   tr:last-child td { border-bottom: none; }
+  @media (max-width: 600px) {
+    th, td { padding: 11px 12px; font-size: 14px; min-width: 110px; }
+  }
   #status { text-align: center; padding: 40px 16px; color: #6e6e73; }
   .error { color: #ff3b30; }
   #status a { color: var(--accent); word-break: break-all; }
 </style>
 </head>
 <body>
-<header><h1>📚 Kitaplık Arama 1.02</h1></header>
+<header><h1>📚 Kitaplık Arama 1.03</h1></header>
 <div class="container">
   <input id="search" type="search" placeholder="Kitaplıkta ara…" autocomplete="off" autofocus>
   <div id="count"></div>
   <div id="status">Yükleniyor…</div>
-  <table id="table" hidden>
-    <thead><tr id="thead-row"></tr></thead>
-    <tbody id="tbody"></tbody>
-  </table>
+  <div class="table-wrapper">
+    <table id="table" hidden>
+      <thead><tr id="thead-row"></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
